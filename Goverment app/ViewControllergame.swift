@@ -11,7 +11,8 @@ import UIKit
 // A game where the user is presented with a random item of rubbish and must select
 // the correct bin to put it in.
 
-// An "enum" lets us use meaningful names in the program, instead of magic numbers.
+// An enum lets us use meaningful names in the program, like "BinColor.green",
+// instead of magic numbers, like "0".
 // See: https://en.wikipedia.org/wiki/Magic_number_(programming)#Unnamed_numerical_constants
 // and: https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html
 // We declare it with type Int, because we will match it with the Int tag of
@@ -24,7 +25,7 @@ enum BinColor: Int {
 
 // A "struct" lets us create an logical object in our code that represents an
 // entity in the business domain that is the concern of the program.
-// Using a struct allows us to express the program's logic in language describing the domain.
+// This allows us to express the program's logic in language describing the domain.
 // See: https://docs.swift.org/swift-book/LanguageGuide/ClassesAndStructures.html
 // Our program's business domain is "rubbish", so we create the concept of
 // a RubbishItem.
@@ -46,8 +47,42 @@ class ViewControllergame: UIViewController {
     var currentRubbishItem: RubbishItem!
     // The exclamation mark lets the compiler know that while we don't set a value here,
     // we will set a value for this before we use it.
+    
     // The rubbishItems provide us a collection to choose from randomly. It is an array.
     var rubbishItems: [RubbishItem]!
+
+    // This code runs when the view is loaded, and is where we populate our collection of rubbishItems.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //  Create 3 items of rubbish
+        let paper = RubbishItem(image: "Paper", name: "Paper", correctBinColor: BinColor.yellow)
+        let plastic = RubbishItem(image: "PlasticBag", name: "Plastic Bag", correctBinColor: BinColor.red)
+        let leaves = RubbishItem(image: "Leaves", name: "Leaves", correctBinColor: BinColor.green )
+        
+        // We can easily add any amount of rubbish items in the future, with no change to the rest of the
+        // program's logic or its complexity. This is a good design - it is an indication that we have a
+        // good separation of concerns.
+        // See: https://en.wikipedia.org/wiki/Separation_of_concerns
+        rubbishItems = [paper, plastic, leaves]
+    }
+    
+    // The user is requesting a new rubbish item.
+    @IBAction func Btnstart(_ sender: UIButton) {
+        // Remove any previous answer in the UI.
+        Lblanswer.text = ""
+        
+        // Select a rubbish item at random from the collection.
+        // @TODO - enforce that it is not the same as the last one.
+        let index = Int.random(in:0...rubbishItems.count - 1)
+        currentRubbishItem = rubbishItems[index]
+        // Note: count - 1, because zero-based!
+        // See: https://en.wikipedia.org/wiki/Zero-based_numbering
+        // and: https://en.wikipedia.org/wiki/Off-by-one_error
+        
+        // Present the rubbish item to the user in the UI.
+        Imgitem.image = UIImage(named: currentRubbishItem.image)
+        Lblitemname.text = currentRubbishItem.name
+    }
 
     // This click handler is linked to all three bins in the UI.
     // All bins call this when they are clicked, and the sender.tag gives away which bin it is,
@@ -58,35 +93,7 @@ class ViewControllergame: UIViewController {
         let isCorrectBin = sender.tag == correctBinTag
         // Set the result in the UI
         self.Lblanswer.text = isCorrectBin ? "Correct": "Incorrect"
-    }
-
-    // The user is requesting a new rubbish item.
-    @IBAction func Btnstart(_ sender: UIButton) {
-        // Remove any previous answer in the UI.
-        Lblanswer.text = ""
-        
-        // Select a rubbish item at random from the collection.
-        // @TODO - enforce that it is not the same as the last one.
-        let index = Int.random(in:0...rubbishItems.count - 1)
-        currentRubbishItem = rubbishItems[index]
-        
-        // Present the rubbish item to the user in the UI.
-        Imgitem.image = UIImage(named: currentRubbishItem.image)
-        Lblitemname.text = currentRubbishItem.name
-    }
-    
-    // This code runs when the view is loaded, and is where we populate our collection of rubbishItems.
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //  Create 3 items of rubbish
-        let paper = RubbishItem(image: "Paper", name: "Paper", correctBinColor: BinColor.yellow)
-        let plastic = RubbishItem(image: "PlasticBag", name: "Plastic Bag", correctBinColor: BinColor.red)
-        let leaves = RubbishItem(image: "Leaves", name: "Leaves", correctBinColor: BinColor.green )
-        
-        // We can easily add any amount of rubbish items in the future, with no change to the rest of the
-        // program's logic or complexity. This is a good design - it is an indication that we have a good
-        // separation of concerns.
-        // See: https://en.wikipedia.org/wiki/Separation_of_concerns
-        rubbishItems = [paper, plastic, leaves]
+        // The ? is a "ternary operator". It functions as an if/else.
+        // See:https://docs.swift.org/swift-book/LanguageGuide/BasicOperators.html#ID71
     }
 }
