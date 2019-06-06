@@ -16,6 +16,7 @@ import UIKit
 // and: https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html
 // We declare it with type Int, because we will match it with the Int tag of
 // a bin button in the UI.
+// By default, for Int enums, numbering starts at 0. So:
 // green = 0, yellow = 1, red = 2
 enum BinColor: Int {
     case green, yellow, red
@@ -30,7 +31,7 @@ enum BinColor: Int {
 struct RubbishItem {
     var image: String
     var name: String
-    var correctBin: BinColor
+    var correctBinColor: BinColor
 }
 
 class ViewControllergame: UIViewController {
@@ -53,7 +54,7 @@ class ViewControllergame: UIViewController {
     // because we set a different tag for each one in the UI designer.
     @IBAction func clickBin(_ sender: UIButton) {
         // .rawValue gives us the Int value of the enum to compare with the tag.
-        let correctBinTag = currentRubbishItem.correctBin.rawValue
+        let correctBinTag = currentRubbishItem.correctBinColor.rawValue
         let isCorrectBin = sender.tag == correctBinTag
         // Set the result in the UI
         self.Lblanswer.text = isCorrectBin ? "Correct": "Incorrect"
@@ -78,12 +79,12 @@ class ViewControllergame: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //  Create 3 items of rubbish
-        let paper = RubbishItem(image: "Paper", name: "Paper", correctBin: BinColor.yellow)
-        let plastic = RubbishItem(image: "PlasticBag", name: "Plastic Bag", correctBin: BinColor.red)
-        let leaves = RubbishItem(image: "Leaves", name: "Leaves", correctBin: BinColor.green )
+        let paper = RubbishItem(image: "Paper", name: "Paper", correctBinColor: BinColor.yellow)
+        let plastic = RubbishItem(image: "PlasticBag", name: "Plastic Bag", correctBinColor: BinColor.red)
+        let leaves = RubbishItem(image: "Leaves", name: "Leaves", correctBinColor: BinColor.green )
         
         // We can easily add any amount of rubbish items in the future, with no change to the rest of the
-        // program's logic or complexity. This is a good design - it is an indication that we have the right
+        // program's logic or complexity. This is a good design - it is an indication that we have a good
         // separation of concerns.
         // See: https://en.wikipedia.org/wiki/Separation_of_concerns
         rubbishItems = [paper, plastic, leaves]
