@@ -10,13 +10,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Goverment app/ViewControllergame.swift"
-            timestampString = "581539421.0799609"
+            timestampString = "581550931.341946"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "6"
             endingLineNumber = "6"
             landmarkName = "unknown"
             landmarkType = "0">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Goverment_app.BinColor.init(rawValue: Swift.Int) -&gt; Swift.Optional&lt;Goverment_app.BinColor&gt;"
+                  moduleName = "Goverment app"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/prahlad/Desktop/Goverment%20app/Goverment%20app/ViewControllergame.swift"
+                  timestampString = "581550932.453481"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "73">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Goverment_app.BinColor.init(rawValue: Swift.Int) -&gt; Swift.Optional&lt;Goverment_app.BinColor&gt;"
+                  moduleName = "Goverment app"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/prahlad/Desktop/Goverment%20app/Goverment%20app/ViewControllergame.swift"
+                  timestampString = "581550932.472739"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "97">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Goverment_app.BinColor.rawValue.getter : Swift.Int"
+                  moduleName = "Goverment app"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/prahlad/Desktop/Goverment%20app/Goverment%20app/ViewControllergame.swift"
+                  timestampString = "581550932.4862961"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "66">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -45,11 +45,12 @@ class ViewControllergame: UIViewController {
     
     // The currentRubbishItem is the one being presented to the user right now.
     var currentRubbishItem: RubbishItem!
+
+    // The rubbishItems provide us a collection to choose from randomly. It is an array.
+    var rubbishItems: [RubbishItem]!
     // The exclamation mark lets the compiler know that while we don't set a value here,
     // we will set a value for this before we use it.
     
-    // The rubbishItems provide us a collection to choose from randomly. It is an array.
-    var rubbishItems: [RubbishItem]!
 
     // This code runs when the view is loaded, and is where we populate our collection of rubbishItems.
     override func viewDidLoad() {
@@ -64,10 +65,13 @@ class ViewControllergame: UIViewController {
         // good separation of concerns.
         // See: https://en.wikipedia.org/wiki/Separation_of_concerns
         rubbishItems = [paper, plastic, leaves]
+        
+        // Calling this here starts a game, and will ensure that currentRubbishItem is set.
+        pickRubbish()
     }
     
-    // The user is requesting a new rubbish item.
-    @IBAction func Btnstart(_ sender: UIButton) {
+    // This is used to start a new game turn
+    func pickRubbish() {
         // Remove any previous answer in the UI.
         Lblanswer.text = ""
         
@@ -80,8 +84,13 @@ class ViewControllergame: UIViewController {
         // and: https://en.wikipedia.org/wiki/Off-by-one_error
         
         // Present the rubbish item to the user in the UI.
-        Imgitem.image = UIImage(named: currentRubbishItem.image)
-        Lblitemname.text = currentRubbishItem.name
+        Imgitem.image = UIImage(named: currentRubbishItem!.image)
+        Lblitemname.text = currentRubbishItem!.name
+    }
+    
+    // The user is requesting a new rubbish item.
+    @IBAction func Btnstart(_ sender: UIButton) {
+        pickRubbish()
     }
 
     // This click handler is linked to all three bins in the UI.
@@ -89,7 +98,7 @@ class ViewControllergame: UIViewController {
     // because we set a different tag for each one in the UI designer.
     @IBAction func clickBin(_ sender: UIButton) {
         // .rawValue gives us the Int value of the enum to compare with the tag.
-        let correctBinTag = currentRubbishItem.correctBinColor.rawValue
+        let correctBinTag = currentRubbishItem!.correctBinColor.rawValue
         let isCorrectBin = sender.tag == correctBinTag
         // Set the result in the UI
         self.Lblanswer.text = isCorrectBin ? "Correct": "Incorrect"

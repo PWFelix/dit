@@ -928,10 +928,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cst-qU-3zd">
-                                                <rect key="frame" x="735" y="624" width="50" height="37"/>
+                                                <rect key="frame" x="654" y="624" width="213" height="37"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="20"/>
-                                                <state key="normal" title="Start"/>
+                                                <state key="normal" title="Pick up more rubbish"/>
                                                 <connections>
                                                     <action selector="Btnstart:" destination="CzO-TH-2zQ" eventType="touchUpInside" id="IAY-8L-t63"/>
                                                 </connections>
