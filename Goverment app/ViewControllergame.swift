@@ -8,15 +8,29 @@
 
 import UIKit
 
-//  Rubbish items have 3 properties
+// A game where the user is presented with a random item of rubbish and must select
+// the correct bin to put it in.
+
+// An "enum" lets us use meaningful names in the program, instead of magic numbers.
+// See: https://en.wikipedia.org/wiki/Magic_number_(programming)#Unnamed_numerical_constants
+// and: https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html
+// We declare it with type Int, because we will match it with the Int tag of
+// a bin button in the UI.
+// green = 0, yellow = 1, red = 2
+enum BinColor: Int {
+    case green, yellow, red
+}
+
+// A "struct" lets us create an logical object in our code that represents an
+// entity in the business domain that is the concern of the program.
+// Using a struct allows us to express the program's logic in language describing the domain.
+// See: https://docs.swift.org/swift-book/LanguageGuide/ClassesAndStructures.html
+// Our program's business domain is "rubbish", so we create the concept of
+// a RubbishItem.
 struct RubbishItem {
-    var image = ""
-    var name = ""
-    //  The answer is the tag on the button of the bins
-    var binBtnTag = 0
-    // tags: 0 - green
-    // 1 - yellow
-    // 2 - red
+    var image: String
+    var name: String
+    var correctBin: BinColor
 }
 
 class ViewControllergame: UIViewController {
@@ -24,32 +38,54 @@ class ViewControllergame: UIViewController {
     @IBOutlet weak var Lblanswer: UILabel!
     @IBOutlet weak var Lblitemname: UILabel!
 
+    // These fields are declared here so we can use them in them in the click handlers
+    // Their value will be available, and the same, everywhere in this view.
+    
+    // The currentRubbishItem is the one being presented to the user right now.
     var currentRubbishItem: RubbishItem!
-    var rubbish: [RubbishItem]!
+    // The exclamation mark lets the compiler know that while we don't set a value here,
+    // we will set a value for this before we use it.
+    // The rubbishItems provide us a collection to choose from randomly. It is an array.
+    var rubbishItems: [RubbishItem]!
 
+    // This click handler is linked to all three bins in the UI.
+    // All bins call this when they are clicked, and the sender.tag gives away which bin it is,
+    // because we set a different tag for each one in the UI designer.
     @IBAction func clickBin(_ sender: UIButton) {
-        //  All bins call this when they are clicked and the tag gives away which bin it is
-        let correct = sender.tag == currentRubbishItem.binBtnTag
-        self.Lblanswer.text = correct ? "Correct": "Incorrect"
+        // .rawValue gives us the Int value of the enum to compare with the tag.
+        let correctBinTag = currentRubbishItem.correctBin.rawValue
+        let isCorrectBin = sender.tag == correctBinTag
+        // Set the result in the UI
+        self.Lblanswer.text = isCorrectBin ? "Correct": "Incorrect"
     }
 
+    // The user is requesting a new rubbish item.
     @IBAction func Btnstart(_ sender: UIButton) {
+        // Remove any previous answer in the UI.
         Lblanswer.text = ""
-        let index = Int.random(in:0...rubbish.count - 1)
-        currentRubbishItem = rubbish[index]
+        
+        // Select a rubbish item at random from the collection.
+        // @TODO - enforce that it is not the same as the last one.
+        let index = Int.random(in:0...rubbishItems.count - 1)
+        currentRubbishItem = rubbishItems[index]
+        
+        // Present the rubbish item to the user in the UI.
         Imgitem.image = UIImage(named: currentRubbishItem.image)
         Lblitemname.text = currentRubbishItem.name
     }
     
+    // This code runs when the view is loaded, and is where we populate our collection of rubbishItems.
     override func viewDidLoad() {
         super.viewDidLoad()
         //  Create 3 items of rubbish
-        let paper = RubbishItem(image: "New-Design-100-Wood-Pulp-A4-Copy-Paper", name: "Paper", binBtnTag: 1)
-        let plastic = RubbishItem(image: "plastic-bag-500x500", name: "Plastic Bag", binBtnTag: 2)
-        let leaves = RubbishItem(image: "thumbnail2.png84965a65-47d6-4871-b253-f8979af85e4bOriginal", name: "Leaves", binBtnTag: 0 )
+        let paper = RubbishItem(image: "Paper", name: "Paper", correctBin: BinColor.yellow)
+        let plastic = RubbishItem(image: "PlasticBag", name: "Plastic Bag", correctBin: BinColor.red)
+        let leaves = RubbishItem(image: "Leaves", name: "Leaves", correctBin: BinColor.green )
         
-        // We can easily add any ammount of 	rubbish items in the future
-        rubbish = [paper, plastic, leaves]
-        // Do any additional setup after loading the view.
+        // We can easily add any amount of rubbish items in the future, with no change to the rest of the
+        // program's logic or complexity. This is a good design - it is an indication that we have the right
+        // separation of concerns.
+        // See: https://en.wikipedia.org/wiki/Separation_of_concerns
+        rubbishItems = [paper, plastic, leaves]
     }
 }
